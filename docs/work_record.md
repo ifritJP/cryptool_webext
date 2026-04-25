@@ -32,3 +32,19 @@
     - `popup.html`, `popup.css` によるモダンでグラスモーフィズムを取り入れた UI を構築。
     - `main.js` に Web Crypto API (AES-GCM + PBKDF2) を使用した復号ロジックを実装。
 - **種別**: 機能追加
+
+## 2026-04-25 21:05
+- **目的**: UI の改善（ポップアップから独立したオプションページへの移行）
+- **作業内容**: 
+    - `src/manifest.json` の変更（`default_popup` の削除、`options_ui` の追加、`background` サービスの追加）
+    - `src/background.js` の作成（アイコンクリック時にオプションページを開く処理）
+    - UI ファイルのリネームと調整（`popup` -> `viewer`）
+    - フルスクリーン表示に適したスタイル調整
+- **期待する結果**: 
+    - アイコンクリック時に新しいタブでビューアーが開くこと。
+    - ファイル選択時に UI が閉じられる問題を解消すること。
+- **結果**: 
+    - ファイル群のリネーム（`popup` -> `viewer`）と `manifest.json` の更新。
+    - `background.js` を実装し、アイコンクリック時に `chrome.runtime.openOptionsPage()` を呼び出すように変更。
+    - `viewer.css` をレスポンシブ対応（フルページ表示用）に調整。
+- **種別**: 改善
