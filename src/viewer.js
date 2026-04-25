@@ -123,9 +123,14 @@ document.addEventListener('DOMContentLoaded', () => {
             contentArea.textContent = decryptedText;
             setupView.style.display = 'none';
             viewer.style.display = 'flex';
-            passwordInput.value = ''; // Security: clear password
+            
+            // Security: clear sensitive data from memory
+            passwordInput.value = ''; 
+            decryptedText = null;
+            uint8Array.fill(0); // Zero out buffer
         } catch (err) {
-            console.error('Decryption failed:', err);
+            passwordInput.value = '';
+            console.error('Decryption failed'); // Don't log full error to console for security
             alert('Decryption failed. Please check your password or file format.');
         }
     });
