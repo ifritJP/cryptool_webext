@@ -119,3 +119,17 @@
 - **結果**: 
     - `description` を「A secure, local-only viewer for AES-256 and PGP symmetric encrypted memos...」に更新。プライバシー保護と対応フォーマットについて明文化しました。
 - **種別**: 改善
+
+## 2026-04-25 21:34
+- **目的**: 機能追加（パスワードの表示/非表示切り替え）
+- **作業内容**: 
+    - `src/viewer.html` にパスワード表示切り替え用のアイコンボタンを追加。
+    - `src/viewer.css` にボタンのスタイルを追加。
+    - `src/viewer.js` に入力タイプを `password` と `text` で切り替える処理を追加。
+- **期待する結果**: 
+    - ユーザーがアイコンをクリックすることで、入力中のパスワードを確認できること。
+- **結果**: 
+    - `viewer.html` のパスワード入力フィールドに `toggle-password` ボタンを追加。
+    - `viewer.css` にてアイコンをフィールド内に配置し、モダンなホバー効果を適用。
+    - `viewer.js` にて `type="password"` と `type="text"` の切り替え、およびアイコンの動的更新（eye/eye-off）を実装。
+- **種別**: 機能追加

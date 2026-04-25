@@ -134,6 +134,37 @@ input[type="password"] {
     transition: border-color 0.2s ease;
 }
 
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
+    padding-right: 44px; /* Space for the button */
+}
+
+.icon-button {
+    position: absolute;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.icon-button:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
 input[type="password"]:focus {
     border-color: var(--accent-primary);
     box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
