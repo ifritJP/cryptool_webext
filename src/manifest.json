@@ -4,11 +4,15 @@
   "version": "1.2.0",
   "description": "A secure, local-only viewer for AES-256 and PGP symmetric encrypted memos. Decrypts files in your browser without uploading data, supporting both modern AES-GCM and standard PGP formats.",
   "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
     "128": "images/icon.png"
   },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
       "128": "images/icon.png"
     }
   },
@@ -17,7 +21,15 @@
     "open_in_tab": true
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "cryptool@ifritjp.github.io",
+      "strict_min_version": "109.0",
+      "data_collection_permissions": false
+    }
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"

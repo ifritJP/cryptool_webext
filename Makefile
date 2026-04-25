@@ -25,6 +25,9 @@ all:
 	@echo make adb-connect ADB_IP=***.***.***.*** ADB_PORT=xxxx
 	@echo make release
 
+pack:
+	(cd src; zip -r ../pack.zip ./)
+
 run-ext:
 	web-ext run -s src --devtools --keep-profile-changes		\
 		-p ~/.cache/mozilla/firefox/web-ext/ --profile-create-if-missing
