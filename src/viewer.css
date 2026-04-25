@@ -70,16 +70,43 @@ h1 {
     -webkit-text-fill-color: transparent;
 }
 
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: -8px;
+}
+
+.tab-btn {
+    width: auto;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    padding: 8px 20px;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+    background: var(--surface-color);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+    border-bottom: 1px solid var(--surface-color);
+    z-index: 1;
+}
+
 .card {
     background: var(--surface-color);
     backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--border-color);
     border-radius: 16px;
-    padding: 20px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    gap: 20px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .input-group {
@@ -122,6 +149,35 @@ input[type="file"] {
     color: var(--text-secondary);
 }
 
+.memo-textarea {
+    width: 100%;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    color: white;
+    font-size: 1rem;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.2s ease;
+}
+
+.memo-textarea:focus {
+    border-color: var(--accent-primary);
+}
+
+.text-file-label {
+    font-size: 0.75rem;
+    color: var(--accent-secondary);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.text-file-label:hover {
+    color: var(--text-primary);
+}
+
 input[type="password"] {
     width: 100%;
     background: rgba(15, 23, 42, 0.5);
@@ -141,7 +197,7 @@ input[type="password"] {
 }
 
 .password-wrapper input {
-    padding-right: 44px; /* Space for the button */
+    padding-right: 44px;
 }
 
 .icon-button {
@@ -197,34 +253,27 @@ input[type="range"]::-webkit-slider-thumb {
     box-shadow: 0 0 5px rgba(139, 92, 246, 0.5);
 }
 
-input[type="range"]::-moz-range-thumb {
-    width: 14px;
-    height: 14px;
-    background: var(--accent-primary);
-    cursor: pointer;
-    border-radius: 50%;
-    border: none;
-    box-shadow: 0 0 5px rgba(139, 92, 246, 0.5);
-}
-
 button {
     width: 100%;
     background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
     color: white;
     border: none;
     border-radius: 8px;
-    padding: 12px;
+    padding: 14px;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.1s active, opacity 0.2s ease;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
     opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.2);
 }
 
 button:active {
-    transform: scale(0.98);
+    transform: translateY(0) scale(0.98);
 }
 
 #viewer {

@@ -15,17 +15,35 @@
             <h1>Cryptool</h1>
         </header>
 
+        <div class="tabs">
+            <button id="tab-decrypt" class="tab-btn active">Decrypt</button>
+            <button id="tab-encrypt" class="tab-btn">Encrypt</button>
+        </div>
+
         <div id="setup-view" class="card">
-            <div class="input-group">
-                <label for="file-input">Encrypted File</label>
-                <div id="drop-zone" class="file-drop-zone">
-                    <p class="file-info">Click or drag & drop file here</p>
-                    <input type="file" id="file-input" accept=".enc,.txt,.memo">
+            <div id="decrypt-section">
+                <div class="input-group">
+                    <label for="file-input">Encrypted File</label>
+                    <div id="drop-zone" class="file-drop-zone">
+                        <p class="file-info">Click or drag & drop file here</p>
+                        <input type="file" id="file-input" accept=".enc,.txt,.memo">
+                    </div>
+                </div>
+            </div>
+
+            <div id="encrypt-section" style="display: none;">
+                <div class="input-group">
+                    <label for="plain-text-input">Plain Text</label>
+                    <textarea id="plain-text-input" placeholder="Type or paste your memo here..." rows="8" class="memo-textarea"></textarea>
+                    <div style="margin-top: 0.5rem; text-align: right;">
+                        <label for="text-file-input" class="text-file-label">Or load from file</label>
+                        <input type="file" id="text-file-input" accept=".txt" style="display: none;">
+                    </div>
                 </div>
             </div>
 
             <div class="input-group">
-                <label for="password">Decryption Key</label>
+                <label for="password">Password / Key</label>
                 <div class="password-wrapper">
                     <input type="password" id="password" placeholder="Enter key..." autocomplete="off">
                     <button id="toggle-password" class="icon-button" title="Toggle visibility">
@@ -35,6 +53,7 @@
             </div>
 
             <button id="decrypt-btn">Decrypt & Open</button>
+            <button id="encrypt-btn" style="display: none;">Encrypt & Save</button>
         </div>
 
         <div id="viewer" class="card">
@@ -53,7 +72,7 @@
     </div>
 
     <footer class="footer">
-        &copy; 2026 Cryptool. Local decrypt only.
+        &copy; 2026 Cryptool. Local only.
     </footer>
 
     <script src="libs/openpgp.min.js"></script>
