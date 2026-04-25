@@ -62,3 +62,12 @@
     - `manifest.json` に `default_popup` を再設定。
     - メニュー内の「Open Viewer」をクリックすることで、タブで `viewer.html` が開くように実装。
 - **種別**: 改善
+
+## 2026-04-25 21:09
+- **目的**: 不具合修正（Firefox MV3 におけるバックグラウンドスクリプトの互換性）
+- **作業内容**: 
+    - `src/manifest.json` の `background.service_worker` を `background.scripts` に変更。
+- **期待する結果**: 
+    - Firefox で `web-ext run` 時に拡張機能が正常にロードされること。
+- **結果**: 修正完了。
+- **種別**: 不具合修正
