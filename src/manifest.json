@@ -1,12 +1,13 @@
 {
   "manifest_version": 3,
   "name": "Cryptool",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "AES-256 encrypted memo viewer.",
   "icons": {
     "128": "images/icon.png"
   },
   "action": {
+    "default_popup": "popup.html",
     "default_icon": {
       "128": "images/icon.png"
     }

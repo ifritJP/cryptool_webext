@@ -48,3 +48,17 @@
     - `background.js` を実装し、アイコンクリック時に `chrome.runtime.openOptionsPage()` を呼び出すように変更。
     - `viewer.css` をレスポンシブ対応（フルページ表示用）に調整。
 - **種別**: 改善
+
+## 2026-04-25 21:07
+- **目的**: UI の改善（ポップアップメニューからの起動への変更）
+- **作業内容**: 
+    - `src/manifest.json` の変更（`default_popup` の再設定）
+    - `src/popup.html` の新規作成（メニュー画面）
+    - `src/popup.js` の作成（「Open Viewer」ボタンの処理）
+- **期待する結果**: 
+    - アイコンクリック時に小さなメニューが表示され、そこからビューアーを起動できること。
+- **結果**: 
+    - `src/popup.html`, `src/popup.css`, `src/popup.js` を新規作成し、メニュー UI を構築。
+    - `manifest.json` に `default_popup` を再設定。
+    - メニュー内の「Open Viewer」をクリックすることで、タブで `viewer.html` が開くように実装。
+- **種別**: 改善
