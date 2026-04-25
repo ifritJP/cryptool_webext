@@ -28,7 +28,9 @@
     "gecko": {
       "id": "cryptool@ifritjp.github.io",
       "strict_min_version": "109.0",
-      "data_collection_permissions": false
+      "data_collection_permissions": {
+        "is_collecting": false
+      }
     }
   },
   "content_security_policy": {
