@@ -85,3 +85,15 @@
     - `viewer.css` にテーマに合わせたスライダースタイルを追加し、アクセシビリティ（appearance）を考慮。
     - `viewer.js` にて、スライダーの `input` イベントを監視し、`contentArea.style.fontSize` を動的に変更するように実装。
 - **種別**: 機能追加
+
+## 2026-04-25 21:20
+- **目的**: 機能追加（PGP 共通鍵暗号サポート）
+- **作業内容**: 
+    - `npm install openpgp` にて OpenPGP.js を取得。
+    - `src/libs/openpgp.min.js` にライブラリを配置。
+    - `viewer.html` でライブラリをロード。
+    - `viewer.js` に PGP メッセージ判定（Armored/Binary）および `openpgp.decrypt` による復号処理を追加。
+- **期待する結果**: 
+    - PGP で暗号化されたファイル（ASCII Armored または Binary）を共通鍵で復号して表示できること。
+- **結果**: 完了。PGP Armored および Binary 両方の検知と復号を確認。
+- **種別**: 機能追加

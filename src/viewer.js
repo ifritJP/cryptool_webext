@@ -64,8 +64,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
+            let decryptedText;
             const arrayBuffer = await selectedFile.arrayBuffer();
-            const decryptedText = await decryptData(arrayBuffer, password);
+            const uint8Array = new Uint8Array(arrayBuffer);
+            const textDecoder = new TextDecoder();
+            const contentStart = textDecoder.decode(uint8Array.slice(0, 100));
+
+            if (contentStart.includes('-----BEGIN PGP MESSAGE-----')) {
+                // PGP Armored
+                const message = await openpgp.readMessage({
+                    armoredMessage: textDecoder.decode(uint8Array)
+                });
+                const { data: decrypted } = await openpgp.decrypt({
+                    message,
+                    passwords: [password],
+                    format: 'utf8'
+                });
+                decryptedText = decrypted;
+            } else if (uint8Array[0] === 0x85 || uint8Array[0] === 0xc5) { 
+                // PGP Binary (roughly checking for Tag 5 or Tag 18)
+                const message = await openpgp.readMessage({
+                    binaryMessage: uint8Array
+                });
+                const { data: decrypted } = await openpgp.decrypt({
+                    message,
+                    passwords: [password],
+                    format: 'utf8'
+                });
+                decryptedText = decrypted;
+            } else {
+                // Original AES-GCM format
+                decryptedText = await decryptData(arrayBuffer, password);
+            }
             
             contentArea.textContent = decryptedText;
             setupView.style.display = 'none';
