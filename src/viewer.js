@@ -68,24 +68,31 @@ document.addEventListener('DOMContentLoaded', () => {
             const arrayBuffer = await selectedFile.arrayBuffer();
             const uint8Array = new Uint8Array(arrayBuffer);
             const textDecoder = new TextDecoder();
+            
+            // Try to detect PGP (Armored or Binary)
             const contentStart = textDecoder.decode(uint8Array.slice(0, 100));
+            let isPGP = false;
+            let message;
 
             if (contentStart.includes('-----BEGIN PGP MESSAGE-----')) {
                 // PGP Armored
-                const message = await openpgp.readMessage({
+                isPGP = true;
+                message = await openpgp.readMessage({
                     armoredMessage: textDecoder.decode(uint8Array)
                 });
-                const { data: decrypted } = await openpgp.decrypt({
-                    message,
-                    passwords: [password],
-                    format: 'utf8'
-                });
-                decryptedText = decrypted;
-            } else if (uint8Array[0] === 0x85 || uint8Array[0] === 0xc5) { 
-                // PGP Binary (roughly checking for Tag 5 or Tag 18)
-                const message = await openpgp.readMessage({
-                    binaryMessage: uint8Array
-                });
+            } else {
+                // Try PGP Binary
+                try {
+                    message = await openpgp.readMessage({
+                        binaryMessage: uint8Array
+                    });
+                    isPGP = true;
+                } catch (e) {
+                    // Not a binary PGP message
+                }
+            }
+
+            if (isPGP) {
                 const { data: decrypted } = await openpgp.decrypt({
                     message,
                     passwords: [password],
@@ -93,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 decryptedText = decrypted;
             } else {
-                // Original AES-GCM format
+                // Fallback to Original AES-GCM format
                 decryptedText = await decryptData(arrayBuffer, password);
             }
             
