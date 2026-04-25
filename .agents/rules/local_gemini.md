@@ -1,0 +1,3 @@
+- ここは firefox 用の web-extension プロジェクトディレクトリです
+- 仕様は docs/spec.md を参照して
+- 追加した機能は dosc/spec.md を更新して
