@@ -10,8 +10,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const backBtn = document.getElementById('back-btn');
     const contentArea = document.getElementById('content-area');
     const fileInfo = document.querySelector('.file-info');
+    const fontSizeSlider = document.getElementById('font-size-slider');
 
     let selectedFile = null;
+
+    // Font size control
+    fontSizeSlider.addEventListener('input', (e) => {
+        contentArea.style.fontSize = `${e.target.value}rem`;
+    });
+
+    // Initialize font size
+    contentArea.style.fontSize = `${fontSizeSlider.value}rem`;
 
     // File selection
     dropZone.addEventListener('click', () => fileInput.click());

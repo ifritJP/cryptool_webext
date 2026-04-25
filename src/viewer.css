@@ -139,6 +139,43 @@ input[type="password"]:focus {
     box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
 }
 
+.font-size-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100px;
+    height: 4px;
+    background: var(--border-color);
+    border-radius: 2px;
+    outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background: var(--accent-primary);
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(139, 92, 246, 0.5);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: var(--accent-primary);
+    cursor: pointer;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 0 5px rgba(139, 92, 246, 0.5);
+}
+
 button {
     width: 100%;
     background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
@@ -173,7 +210,7 @@ button:active {
     border-radius: 12px;
     padding: 16px;
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
-    font-size: 0.875rem;
+    font-size: 1.2rem;
     line-height: 1.6;
     color: #e2e8f0;
     overflow-y: auto;

@@ -34,7 +34,13 @@
 
         <div id="viewer" class="card">
             <div class="input-group">
-                <label>Memo Content</label>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <label>Memo Content</label>
+                    <div class="font-size-control">
+                        <label for="font-size-slider" style="font-size: 0.75rem;">Font Size</label>
+                        <input type="range" id="font-size-slider" min="0.8" max="2.0" step="0.1" value="1.2">
+                    </div>
+                </div>
                 <div id="content-area" class="memo-content" tabindex="0"></div>
             </div>
             <button id="back-btn" style="background: transparent; border: 1px solid var(--border-color);">Close Memo</button>
