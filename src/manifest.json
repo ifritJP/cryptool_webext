@@ -27,14 +27,16 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "cryptool@ifritjp.github.io",
-      "strict_min_version": "109.0",
+      "strict_min_version": "120.0",
       "data_collection_permissions": {
-        "is_collecting": false
+	  "required": [
+              "none"
+	  ]
       }
     }
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
+    "extension_pages": "script-src 'self'; object-src 'none'"
   },
   "permissions": [],
   "host_permissions": []

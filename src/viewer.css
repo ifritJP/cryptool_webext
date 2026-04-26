@@ -305,3 +305,60 @@ button:active {
     text-align: center;
     border-top: 1px solid var(--border-color);
 }
+
+.security-settings {
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+}
+
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.toggle-switch input {
+    display: none;
+}
+
+.toggle-switch .slider {
+    position: relative;
+    width: 36px;
+    height: 18px;
+    background-color: var(--border-color);
+    border-radius: 18px;
+    transition: 0.3s;
+}
+
+.toggle-switch .slider::before {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.toggle-switch input:checked + .slider {
+    background-color: var(--accent-primary);
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+}
+
+.toggle-switch input:checked + .slider::before {
+    transform: translateX(18px);
+}
+
+.toggle-switch .label-text {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+}
+
+.toggle-switch:hover .label-text {
+    color: var(--text-primary);
+}

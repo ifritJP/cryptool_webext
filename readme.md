@@ -1,5 +1,7 @@
 # Cryptool
 
+[日本語版 (Japanese)](README.ja.md)
+
 A secure, local-only viewer for encrypted memos. Supports AES-256 (GCM) and PGP symmetric encryption.
 
 ## Features
@@ -8,6 +10,9 @@ A secure, local-only viewer for encrypted memos. Supports AES-256 (GCM) and PGP 
 - **Support for Multiple Formats**:
   - Custom AES-256 GCM (with PBKDF2 key derivation).
   - Standard PGP Symmetric Encryption (AES-256, SHA-512 S2K).
+- **Security Features**:
+  - **Auto-clear on hide**: Automatically clears sensitive data when the tab is hidden or closed (configurable).
+  - **Memory Safety**: Actively clears sensitive data from memory after use.
 - **Premium UI**: Modern dark theme with glassmorphism and smooth interactions.
 - **Customization**: Adjust font size for better readability.
 - **Secure Key Input**: Toggle password visibility for convenience while maintaining security.

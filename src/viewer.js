@@ -28,7 +28,49 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabDecrypt = document.getElementById('tab-decrypt');
     const tabEncrypt = document.getElementById('tab-encrypt');
 
+    // Security Toggle
+    const autoClearToggle = document.getElementById('auto-clear-toggle');
+
+    // Load setting
+    const savedSetting = localStorage.getItem('auto-clear-on-hide');
+    if (savedSetting !== null) {
+        autoClearToggle.checked = savedSetting === 'true';
+    }
+
+    autoClearToggle.addEventListener('change', () => {
+        localStorage.setItem('auto-clear-on-hide', autoClearToggle.checked);
+    });
+
     let selectedFile = null;
+
+    // Visibility Change Security
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden' && autoClearToggle.checked) {
+            clearSensitiveData();
+        }
+    });
+
+    // Also clear on pagehide (for mobile browser closing/suspension)
+    window.addEventListener('pagehide', () => {
+        if (autoClearToggle.checked) {
+            clearSensitiveData();
+        }
+    });
+
+    function clearSensitiveData() {
+        contentArea.textContent = '';
+        passwordInput.value = '';
+        plainTextInput.value = '';
+        selectedFile = null;
+        fileInfo.textContent = 'Click or drag & drop file here';
+        fileInfo.style.color = '';
+
+        if (viewer.style.display === 'flex') {
+            viewer.style.display = 'none';
+            setupView.style.display = 'flex';
+            document.querySelector('.tabs').style.display = 'flex';
+        }
+    }
 
     // Tab Switching Logic
     tabDecrypt.addEventListener('click', () => {
