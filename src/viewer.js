@@ -1,6 +1,8 @@
 "use strict";
 
 document.addEventListener('DOMContentLoaded', () => {
+    const CURRENT_VERSION = 1;
+
     // Decrypt View Elements
     const setupView = document.getElementById('setup-view');
     const decryptSection = document.getElementById('decrypt-section');
@@ -245,7 +247,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             passwordInput.value = '';
             console.error('Decryption failed', err);
-            alert('Decryption failed. Please check your password or file format.');
+            const msg = err.message.includes('version') ? err.message : 'Decryption failed. Please check your password or file format.';
+            alert(msg);
         }
     });
 
@@ -355,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const header = new ArrayBuffer(37);
         const view = new DataView(header);
         view.setUint32(0, 0x4352544C); // 'CRTL'
-        view.setUint8(4, 1);           // Version 1
+        view.setUint8(4, CURRENT_VERSION);
         view.setUint32(5, iterations); // Iterations
         new Uint8Array(header, 9, 16).set(salt);
         new Uint8Array(header, 25, 12).set(iv);
@@ -377,7 +380,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (buffer.byteLength >= 37 && view.getUint32(0) === 0x4352544C) {
             const version = view.getUint8(4);
-            if (version !== 1) throw new Error('Unsupported format version');
+            if (version !== CURRENT_VERSION) {
+                throw new Error(`Unsupported format version: ${version}. This tool only supports version: ${CURRENT_VERSION}.`);
+            }
             iterations = view.getUint32(5);
             if (iterations < 100000 || iterations > 2000000) throw new Error('Invalid iterations value');
             salt = buffer.slice(9, 25);
