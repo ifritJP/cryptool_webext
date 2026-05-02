@@ -164,9 +164,27 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             let decryptedText;
             const arrayBuffer = await selectedFile.arrayBuffer();
-            const uint8Array = new Uint8Array(arrayBuffer);
+            let uint8Array = new Uint8Array(arrayBuffer);
             const textDecoder = new TextDecoder();
             
+            // Check for Base64 format
+            const potentialText = textDecoder.decode(uint8Array);
+            if (!potentialText.startsWith('-----BEGIN PGP') && !isBinaryCRTL(uint8Array)) {
+                try {
+                    console.log('Non-binary file detected, checking for Base64...');
+                    // Clean whitespace and try base64 decode
+                    const cleaned = potentialText.replace(/\s/g, '');
+                    const decoded = base64ToArrayBuffer(cleaned);
+                    const decodedArray = new Uint8Array(decoded);
+                    if (isBinaryCRTL(decodedArray)) {
+                        console.log('Base64 CRTL format detected and decoded.');
+                        uint8Array = decodedArray;
+                    }
+                } catch (e) {
+                    console.log('Not a valid Base64 or missing CRTL magic, proceeding as-is.');
+                }
+            }
+
             const contentStart = textDecoder.decode(uint8Array.slice(0, 100));
             let isPGP = false;
             let message;
@@ -189,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 decryptedText = decrypted;
             } else {
-                decryptedText = await decryptData(arrayBuffer, password);
+                decryptedText = await decryptData(uint8Array.buffer, password);
             }
             
             contentArea.textContent = decryptedText;
@@ -202,10 +220,16 @@ document.addEventListener('DOMContentLoaded', () => {
             uint8Array.fill(0);
         } catch (err) {
             passwordInput.value = '';
-            console.error('Decryption failed');
+            console.error('Decryption failed', err);
             alert('Decryption failed. Please check your password or file format.');
         }
     });
+
+    function isBinaryCRTL(arr) {
+        return arr.length >= 4 && 
+               arr[0] === 0x43 && arr[1] === 0x52 && 
+               arr[2] === 0x54 && arr[3] === 0x4C;
+    }
 
     // Encryption Logic
     encryptBtn.addEventListener('click', async () => {
@@ -218,7 +242,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const encryptedBuffer = await encryptData(plainText, password);
-            const blob = new Blob([encryptedBuffer], { type: 'application/octet-stream' });
+            const base64Content = arrayBufferToBase64(encryptedBuffer);
+            console.log('Data encrypted and converted to Base64. Length:', base64Content.length);
+            const blob = new Blob([base64Content], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
             
             const a = document.createElement('a');
@@ -229,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            alert('Encryption successful! File downloaded as memo.enc');
+            alert('Encryption successful! File downloaded as memo.enc (Base64 format)');
             
             // Security: clear inputs
             passwordInput.value = '';
@@ -331,5 +357,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = dec.decode(decrypted);
         new Uint8Array(decrypted).fill(0);
         return result;
+    }
+
+    function arrayBufferToBase64(buffer) {
+        let binary = '';
+        const bytes = new Uint8Array(buffer);
+        const len = bytes.byteLength;
+        for (let i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return window.btoa(binary);
+    }
+
+    function base64ToArrayBuffer(base64) {
+        const binary_string = window.atob(base64);
+        const len = binary_string.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+            bytes[i] = binary_string.charCodeAt(i);
+        }
+        return bytes.buffer;
     }
 });
