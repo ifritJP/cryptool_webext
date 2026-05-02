@@ -1,6 +1,12 @@
 "use strict";
 
 document.addEventListener('DOMContentLoaded', () => {
+    /**
+     * 暗号化データのフォーマットバージョン。
+     * - アプリのバージョン(manifest.jsonのversion)ではありません。
+     * - 暗号化データの構造（ヘッダー、アルゴリズム等）を変更した場合に更新してください。
+     * - 復号処理は可能な限り旧バージョンのフォーマットもサポートし続けてください。
+     */
     const CURRENT_VERSION = 1;
 
     // Decrypt View Elements
