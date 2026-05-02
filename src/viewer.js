@@ -13,6 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const encryptSection = document.getElementById('encrypt-section');
     const plainTextInput = document.getElementById('plain-text-input');
     const textFileInput = document.getElementById('text-file-input');
+    const encryptDownloadCheck = document.getElementById('encrypt-download-check');
+    const encryptShowCheck = document.getElementById('encrypt-show-check');
+    const encryptResultGroup = document.getElementById('encrypt-result-group');
+    const encryptResultArea = document.getElementById('encrypt-result-area');
+    const copyResultBtn = document.getElementById('copy-result-btn');
     const encryptBtn = document.getElementById('encrypt-btn');
     
     // Common Elements
@@ -63,6 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
         passwordInput.value = '';
         plainTextInput.value = '';
         encryptedTextInput.value = '';
+        encryptResultArea.value = '';
+        encryptResultGroup.style.display = 'none';
         selectedFile = null;
         fileInfo.textContent = 'Click or drag & drop file here';
         fileInfo.style.color = '';
@@ -257,30 +264,57 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        if (!encryptDownloadCheck.checked && !encryptShowCheck.checked) {
+            alert('Please select at least one output option (Download or Show).');
+            return;
+        }
+
         try {
             const encryptedBuffer = await encryptData(plainText, password);
             const base64Content = arrayBufferToBase64(encryptedBuffer);
             console.log('Data encrypted and converted to Base64. Length:', base64Content.length);
-            const blob = new Blob([base64Content], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
             
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'memo.enc';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            if (encryptDownloadCheck.checked) {
+                const blob = new Blob([base64Content], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'memo.enc';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                console.log('File download triggered');
+            }
+
+            if (encryptShowCheck.checked) {
+                encryptResultArea.value = base64Content;
+                encryptResultGroup.style.display = 'block';
+                console.log('Result shown in textarea');
+            } else {
+                encryptResultGroup.style.display = 'none';
+            }
             
-            alert('Encryption successful! File downloaded as memo.enc (Base64 format)');
+            if (encryptDownloadCheck.checked) {
+                alert('Encryption successful!');
+            }
             
-            // Security: clear inputs
+            // Security: clear sensitive input, but keep result if shown
             passwordInput.value = '';
-            plainTextInput.value = '';
+            // plainTextInput.value = ''; // Optional: keep for editing
         } catch (err) {
             console.error('Encryption failed', err);
             alert('Encryption failed. Please try again.');
         }
+    });
+
+    copyResultBtn.addEventListener('click', () => {
+        encryptResultArea.select();
+        document.execCommand('copy');
+        copyResultBtn.textContent = 'Copied!';
+        setTimeout(() => {
+            copyResultBtn.textContent = 'Copy Result';
+        }, 2000);
     });
 
     backBtn.addEventListener('click', () => {

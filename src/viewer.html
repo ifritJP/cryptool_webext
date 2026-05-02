@@ -44,6 +44,28 @@
                         <input type="file" id="text-file-input" accept=".txt" style="display: none;">
                     </div>
                 </div>
+
+                <div class="input-group">
+                    <label>Output Options</label>
+                    <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="encrypt-download-check" checked style="width: auto;">
+                            <span style="font-size: 0.9rem;">Download File</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="encrypt-show-check" style="width: auto;">
+                            <span style="font-size: 0.9rem;">Show Result</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="encrypt-result-group" class="input-group" style="display: none;">
+                    <label for="encrypt-result-area">Encrypted Result</label>
+                    <textarea id="encrypt-result-area" readonly rows="6" class="memo-textarea" style="background: rgba(255,255,255,0.05);"></textarea>
+                    <button id="copy-result-btn" style="margin-top: 0.5rem; width: auto; padding: 0.6rem 1.2rem; font-size: 0.85rem; background: var(--accent-secondary);">
+                        Copy Result
+                    </button>
+                </div>
             </div>
 
             <div class="input-group">
