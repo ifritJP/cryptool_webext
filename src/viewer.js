@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const decryptSection = document.getElementById('decrypt-section');
     const dropZone = document.getElementById('drop-zone');
     const fileInput = document.getElementById('file-input');
+    const encryptedTextInput = document.getElementById('encrypted-text-input');
     const decryptBtn = document.getElementById('decrypt-btn');
     
     // Encrypt View Elements
@@ -61,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         contentArea.textContent = '';
         passwordInput.value = '';
         plainTextInput.value = '';
+        encryptedTextInput.value = '';
         selectedFile = null;
         fileInfo.textContent = 'Click or drag & drop file here';
         fileInfo.style.color = '';
@@ -156,16 +158,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // Decryption Logic
     decryptBtn.addEventListener('click', async () => {
         const password = passwordInput.value;
-        if (!selectedFile || !password) {
-            alert('Please select a file and enter a password.');
+        const encryptedText = encryptedTextInput.value.trim();
+        
+        if (!selectedFile && !encryptedText) {
+            alert('Please select a file or paste encrypted text.');
+            return;
+        }
+        if (!password) {
+            alert('Please enter a password.');
             return;
         }
 
         try {
             let decryptedText;
-            const arrayBuffer = await selectedFile.arrayBuffer();
-            let uint8Array = new Uint8Array(arrayBuffer);
+            let uint8Array;
             const textDecoder = new TextDecoder();
+            const textEncoder = new TextEncoder();
+
+            if (encryptedText) {
+                console.log('Using pasted text for decryption');
+                uint8Array = textEncoder.encode(encryptedText);
+            } else {
+                console.log('Using selected file for decryption');
+                const arrayBuffer = await selectedFile.arrayBuffer();
+                uint8Array = new Uint8Array(arrayBuffer);
+            }
             
             // Check for Base64 format
             const potentialText = textDecoder.decode(uint8Array);
