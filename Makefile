@@ -24,6 +24,7 @@ all:
 	@echo make adb-pair ADB_IP=***.***.***.*** ADB_PORT=xxxx
 	@echo make adb-connect ADB_IP=***.***.***.*** ADB_PORT=xxxx
 	@echo make release
+	@echo make pack
 
 pack:
 	(cd src; zip -r ../pack.zip ./)
