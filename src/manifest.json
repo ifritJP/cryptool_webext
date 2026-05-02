@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Cryptool",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "A secure, local-only viewer for AES-256 and PGP symmetric encrypted memos. Decrypts files in your browser without uploading data, supporting both modern AES-GCM and standard PGP formats.",
   "icons": {
     "16": "images/icon16.png",
